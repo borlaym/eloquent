@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { HashRouter as Router, Route } from "react-router-dom";
 import SelectGroupScreen from './screens/SelectGroupScreen';
 import GameListScreen from './screens/GameListScreen';
 import GameDetailsScreen from './screens/GameDetailsScreen';
