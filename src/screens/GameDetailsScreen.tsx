@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link, match } from 'react-router-dom';
+import { match } from 'react-router-dom';
 import { State, Group, Game } from '../types';
 import { connect } from 'react-redux';
 

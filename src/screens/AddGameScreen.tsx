@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { Link, match, RouteProps } from 'react-router-dom';
-import { State, Group, Game, NewGame } from '../types';
+import { State, Group, NewGame } from '../types';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import saveGame from '../actions/SaveGameAction';

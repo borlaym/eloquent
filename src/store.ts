@@ -1,4 +1,4 @@
-import { createStore, Action } from 'redux'
+import { createStore } from 'redux'
 import { State } from './types';
 import { SaveGameAction, SAVE_GAME } from './actions/SaveGameAction';
 
