@@ -6,10 +6,10 @@ export interface Group {
 	name: string,
 	id: string,
 	players: string[],
-	matches: Match[]
+	games: Game[]
 }
 
-export interface Match {
+export interface Game {
 	id: string,
 	players: string[],
 	score: null | number[],

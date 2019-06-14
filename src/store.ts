@@ -7,7 +7,7 @@ const dummyData: State = {
 			name: 'Chess',
 			id: 'nc130nclkdac13oncas',
 			players: ['Viktor', 'Marci'],
-			matches: [{
+			games: [{
 				players: ['Viktor', 'Marci'],
 				score: null,
 				winner: 0,
@@ -27,7 +27,7 @@ const dummyData: State = {
 			name: 'Go',
 			id: 'asasca2csalmcsac13noiubc',
 			players: ['Ed', 'Viktor'],
-			matches: [{
+			games: [{
 				players: ['Ed', 'Viktor'],
 				score: [15, 3],
 				winner: 0,
