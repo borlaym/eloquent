@@ -1,17 +1,17 @@
 import * as React from 'react';
-import { Link, match } from 'react-router-dom';
+import { Link, match, RouteProps } from 'react-router-dom';
 import { State, Group, Game, NewGame } from '../types';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import saveGame from '../actions/SaveGameAction';
+import { RouteChildrenProps } from 'react-router';
 
-interface Props {
-	match: match<{ groupId: string }>,
+interface Props extends RouteChildrenProps<{ groupId: string }> {
 	group?: Group,
 	onSave: (game: NewGame) => void 
 };
 
-function AddGameScreen({ group, onSave }: Props) {
+function AddGameScreen({ group, onSave, history }: Props) {
 	const [player1, setPlayer1] = React.useState('');
 	const [player2, setPlayer2] = React.useState('');
 	const [score1, setScore1] = React.useState(0);
@@ -38,6 +38,7 @@ function AddGameScreen({ group, onSave }: Props) {
 					winner,
 					score: [score1, score2]
 				})
+				history.push(`/group/${group.id}`);
 			}}>Save</button>
 		</div>
 	);
@@ -45,15 +46,15 @@ function AddGameScreen({ group, onSave }: Props) {
 
 function mapStateToProps(state: State, ownProps: Props): Props {
 	return {
-		match: ownProps.match,
-		group: state.groups.find(group => group.id === ownProps.match.params.groupId),
+		...ownProps,
+		group: state.groups.find(group => ownProps.match && group.id === ownProps.match.params.groupId),
 		onSave: ownProps.onSave
 	}
 }
 
 function matchDispatchToProps(dispatch: Dispatch, ownProps: Props) {
 	return {
-		onSave: (game: NewGame) => dispatch(saveGame(game, ownProps.match.params.groupId))
+		onSave: (game: NewGame) => dispatch(saveGame(game, ownProps.match && ownProps.match.params.groupId || ''))
 	}
 }
 
