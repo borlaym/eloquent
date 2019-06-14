@@ -1,26 +1,17 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import SelectGroupScreen from './screens/SelectGroupScreen';
+import MatchListScreen from './screens/MatchListScreen';
+import MatchDetailsScreen from './screens/MatchDetailsScreen';
+import AddMatchScreen from './screens/AddMatchScreen';
 
-const App: React.FC = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default function App() {
+	return (
+		<Router>
+			<Route path="/" exact component={SelectGroupScreen} />
+			<Route path="/group/:id" component={MatchListScreen} />
+			<Route path="/group/:id/matches/:matchId" component={MatchDetailsScreen} />		
+			<Route path="/group/:id/add" component={AddMatchScreen} />		
+		</Router>
+	)
 }
-
-export default App;
