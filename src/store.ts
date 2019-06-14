@@ -1,5 +1,6 @@
-import { createStore } from 'redux'
+import { createStore, Action } from 'redux'
 import { State } from './types';
+import { SaveGameAction, SAVE_GAME } from './actions/SaveGameAction';
 
 const dummyData: State = {
 	groups: [
@@ -47,8 +48,33 @@ const dummyData: State = {
 	]
 }
 
-function reducer(state: State = dummyData) {
-	return state;
+type ActionTypes = SaveGameAction;
+	
+
+function reducer(state: State = dummyData, action: ActionTypes): State {
+	switch (action.type) {
+		case SAVE_GAME:
+			const group = state.groups.find(group => group.id === action.payload.groupId);
+			if (!group) {
+				throw new Error('Didn\'t find group in reducer');
+			}
+			return {
+				...state,
+				groups: [
+					...state.groups.slice(0, state.groups.indexOf(group)),
+					{
+						...group,
+						games: [...group.games, {
+							...action.payload.game,
+							id: String(Date.now())
+						}]
+					},
+					...state.groups.slice(state.groups.indexOf(group) + 1)
+				]
+			};
+		default:
+			return state;
+	}
 }
 
 const store = createStore(reducer);

@@ -9,9 +9,12 @@ export interface Group {
 	games: Game[]
 }
 
-export interface Game {
-	id: string,
+export interface NewGame {
 	players: string[],
 	score: null | number[],
 	winner: 0 | 1
+}
+
+export interface Game extends NewGame {
+	id: string
 }

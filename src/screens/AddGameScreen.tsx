@@ -1,19 +1,22 @@
 import * as React from 'react';
 import { Link, match } from 'react-router-dom';
-import { State, Group } from '../types';
+import { State, Group, Game, NewGame } from '../types';
 import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import saveGame from '../actions/SaveGameAction';
 
 interface Props {
 	match: match<{ groupId: string }>,
-	group?: Group
+	group?: Group,
+	onSave: (game: NewGame) => void 
 };
 
-function AddGameScreen({ group }: Props) {
+function AddGameScreen({ group, onSave }: Props) {
 	const [player1, setPlayer1] = React.useState('');
 	const [player2, setPlayer2] = React.useState('');
 	const [score1, setScore1] = React.useState(0);
 	const [score2, setScore2] = React.useState(0);
-	const [winner, setWinner] = React.useState(0);
+	const [winner, setWinner] = React.useState<0 | 1>(0);
 	if (!group) {
 		return (<h1>Group not found</h1>);
 	}
@@ -29,7 +32,13 @@ function AddGameScreen({ group }: Props) {
 			<p>Score</p>
 			<input type="number" value={score1} onChange={event => setScore1(parseInt(event.target.value, 10))} /> - 
 			<input type="number" value={score2} onChange={event => setScore2(parseInt(event.target.value, 10))} />
-			<button>Save</button>
+			<button onClick={() => {
+				onSave({
+					players: [player1, player2],
+					winner,
+					score: [score1, score2]
+				})
+			}}>Save</button>
 		</div>
 	);
 }
@@ -37,8 +46,15 @@ function AddGameScreen({ group }: Props) {
 function mapStateToProps(state: State, ownProps: Props): Props {
 	return {
 		match: ownProps.match,
-		group: state.groups.find(group => group.id === ownProps.match.params.groupId)
+		group: state.groups.find(group => group.id === ownProps.match.params.groupId),
+		onSave: ownProps.onSave
 	}
 }
 
-export default connect(mapStateToProps)(AddGameScreen);
+function matchDispatchToProps(dispatch: Dispatch, ownProps: Props) {
+	return {
+		onSave: (game: NewGame) => dispatch(saveGame(game, ownProps.match.params.groupId))
+	}
+}
+
+export default connect(mapStateToProps, matchDispatchToProps)(AddGameScreen);
