@@ -10,15 +10,18 @@ const dummyData: State = {
 			matches: [{
 				players: ['Viktor', 'Marci'],
 				score: null,
-				winner: 0
+				winner: 0,
+				id: 'dacas'
 			}, {
 				players: ['Viktor', 'Marci'],
 				score: null,
-				winner: 1
+				winner: 1,
+				id: 'xacxxz'
 			}, {
 				players: ['Viktor', 'Marci'],
 				score: null,
-				winner: 1
+				winner: 1,
+				id: 'cascz'
 			}]
 		}, {
 			name: 'Go',
@@ -27,15 +30,18 @@ const dummyData: State = {
 			matches: [{
 				players: ['Ed', 'Viktor'],
 				score: [15, 3],
-				winner: 0
+				winner: 0,
+				id: 'cazazcac'
 			}, {
 				players: ['Ed', 'Viktor'],
 				score: [6, 18],
-				winner: 1
+				winner: 1,
+				id: 'ascascivavs'
 			}, {
 				players: ['Viktor', 'Ed'],
 				score: [9, 11],
-				winner: 1
+				winner: 1,
+				id: 'casvdv3fd'
 			}]
 		}
 	]

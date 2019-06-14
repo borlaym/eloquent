@@ -9,9 +9,9 @@ export default function App() {
 	return (
 		<Router>
 			<Route path="/" exact component={SelectGroupScreen} />
-			<Route path="/group/:id" component={MatchListScreen} />
-			<Route path="/group/:id/matches/:matchId" component={MatchDetailsScreen} />		
-			<Route path="/group/:id/add" component={AddMatchScreen} />		
+			<Route path="/group/:id" exact component={MatchListScreen} />
+			<Route path="/group/:id/matches/:matchId" exact component={MatchDetailsScreen} />		
+			<Route path="/group/:id/add" exact component={AddMatchScreen} />		
 		</Router>
 	)
 }

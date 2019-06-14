@@ -10,6 +10,7 @@ export interface Group {
 }
 
 export interface Match {
+	id: string,
 	players: string[],
 	score: null | number[],
 	winner: 0 | 1
