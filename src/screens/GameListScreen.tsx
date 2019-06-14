@@ -25,6 +25,8 @@ function GameListScreen({ group }: Props) {
 				))}
 			</ul>
 
+			<Link to={`/group/${group.id}/add`}>Add new game</Link>
+
 		</div>
 	);
 }

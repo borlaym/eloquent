@@ -9,7 +9,7 @@ interface Props {
 	game?: Game
 };
 
-function MatchListScreen({ group, game }: Props) {
+function GameDetailsScreen({ group, game }: Props) {
 	if (!group || !game) {
 		return (<h1>Game not found</h1>);
 	}
@@ -35,4 +35,4 @@ function mapStateToProps(state: State, ownProps: Props): Props {
 	};
 }
 
-export default connect(mapStateToProps)(MatchListScreen);
+export default connect(mapStateToProps)(GameDetailsScreen);
