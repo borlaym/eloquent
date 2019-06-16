@@ -1,8 +1,10 @@
 package controllers
 
 import javax.inject._
+
 import play.api.mvc._
 import model._
+import play.api.libs.json.Json
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
@@ -17,7 +19,7 @@ class GroupController @Inject()(cc: ControllerComponents) extends AbstractContro
   def getGroupById(groupId: String) = Action { implicit request: Request[AnyContent] =>
     val group = groups.get(groupId)
     group match {
-      case Some(Group(id, name)) => Ok(name)
+      case Some(group) => Ok(Json.toJson(group))
       case _ => NotFound("Group not found")
     }
   }
