@@ -4,7 +4,8 @@ import play.api.libs.json.{JsPath, Json, OFormat, Writes}
 
 case class Group (
 	id: Long,
-	name: String
+	name: String,
+	games: List[Game]
 )
 
 object Group {
