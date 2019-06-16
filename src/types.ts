@@ -4,7 +4,7 @@ export interface State {
 
 export interface Group {
 	name: string,
-	id: string,
+	id: number,
 	players: string[],
 	games: Game[]
 }
@@ -16,5 +16,5 @@ export interface NewGame {
 }
 
 export interface Game extends NewGame {
-	id: string
+	id: number
 }

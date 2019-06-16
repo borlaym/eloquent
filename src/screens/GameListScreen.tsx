@@ -34,7 +34,7 @@ function GameListScreen({ group }: Props) {
 function mapStateToProps(state: State, ownProps: Props): Props {
 	return {
 		match: ownProps.match,
-		group: state.groups.find(group => group.id === ownProps.match.params.groupId)
+		group: state.groups.find(group => group.id === parseInt(ownProps.match.params.groupId, 10))
 	}
 }
 

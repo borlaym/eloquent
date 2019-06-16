@@ -6,11 +6,11 @@ export interface SaveGameAction {
 	type: typeof SAVE_GAME
 	payload: {
 		game: NewGame,
-		groupId: string
+		groupId: number
 	}
 }
 
-export default function saveGame(game: NewGame, groupId: string): SaveGameAction {
+export default function saveGame(game: NewGame, groupId: number): SaveGameAction {
 	return {
 		type: 'SAVE_GAME',
 		payload: {

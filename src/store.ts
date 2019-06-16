@@ -1,54 +1,14 @@
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk';
 import { State } from './types';
 import { SaveGameAction, SAVE_GAME } from './actions/SaveGameAction';
+import { FETCH_GROUPS, FetchGroupsAction } from './actions/FetchGroupsAction';
 
 const dummyData: State = {
-	groups: [
-		{
-			name: 'Chess',
-			id: 'nc130nclkdac13oncas',
-			players: ['Viktor', 'Marci'],
-			games: [{
-				players: ['Viktor', 'Marci'],
-				score: null,
-				winner: 0,
-				id: 'dacas'
-			}, {
-				players: ['Viktor', 'Marci'],
-				score: null,
-				winner: 1,
-				id: 'xacxxz'
-			}, {
-				players: ['Viktor', 'Marci'],
-				score: null,
-				winner: 1,
-				id: 'cascz'
-			}]
-		}, {
-			name: 'Go',
-			id: 'asasca2csalmcsac13noiubc',
-			players: ['Ed', 'Viktor'],
-			games: [{
-				players: ['Ed', 'Viktor'],
-				score: [15, 3],
-				winner: 0,
-				id: 'cazazcac'
-			}, {
-				players: ['Ed', 'Viktor'],
-				score: [6, 18],
-				winner: 1,
-				id: 'ascascivavs'
-			}, {
-				players: ['Viktor', 'Ed'],
-				score: [9, 11],
-				winner: 1,
-				id: 'casvdv3fd'
-			}]
-		}
-	]
+	groups: []
 }
 
-type ActionTypes = SaveGameAction;
+type ActionTypes = SaveGameAction | FetchGroupsAction;
 	
 
 function reducer(state: State = dummyData, action: ActionTypes): State {
@@ -66,16 +26,21 @@ function reducer(state: State = dummyData, action: ActionTypes): State {
 						...group,
 						games: [...group.games, {
 							...action.payload.game,
-							id: String(Date.now())
+							id: Date.now()
 						}]
 					},
 					...state.groups.slice(state.groups.indexOf(group) + 1)
 				]
 			};
+		case FETCH_GROUPS:
+			return {
+				...state,
+				groups: action.payload
+			}
 		default:
 			return state;
 	}
 }
 
-const store = createStore(reducer);
+const store = createStore(reducer, applyMiddleware(thunk));
 export default store;

@@ -46,14 +46,14 @@ function AddGameScreen({ group, onSave, history }: Props) {
 function mapStateToProps(state: State, ownProps: Props): Props {
 	return {
 		...ownProps,
-		group: state.groups.find(group => ownProps.match && group.id === ownProps.match.params.groupId),
+		group: state.groups.find(group => ownProps.match && group.id === parseInt(ownProps.match.params.groupId, 10)),
 		onSave: ownProps.onSave
 	}
 }
 
 function matchDispatchToProps(dispatch: Dispatch, ownProps: Props) {
 	return {
-		onSave: (game: NewGame) => dispatch(saveGame(game, ownProps.match && ownProps.match.params.groupId || ''))
+		onSave: (game: NewGame) => dispatch(saveGame(game, ownProps.match && parseInt(ownProps.match.params.groupId) || 0))
 	}
 }
 

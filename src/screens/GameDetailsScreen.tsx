@@ -26,8 +26,8 @@ function GameDetailsScreen({ group, game }: Props) {
 }
 
 function mapStateToProps(state: State, ownProps: Props): Props {
-	const group = state.groups.find(group => group.id === ownProps.match.params.groupId);
-	const game = group ? group.games.find(game => game.id === ownProps.match.params.gameId) : undefined;
+	const group = state.groups.find(group => group.id === parseInt(ownProps.match.params.groupId));
+	const game = group ? group.games.find(game => game.id === parseInt(ownProps.match.params.gameId)) : undefined;
 	return {
 		match: ownProps.match,
 		group,
