@@ -5,4 +5,6 @@
 
 # An example controller showing a sample home page
 GET     /                           controllers.HomeController.index
-GET     /groups/:groupId            controllers.GroupController.getGroupById(groupId: String)
+GET     /groups                     controllers.GroupController.getAllGroups
+GET     /groups/:groupId            controllers.GroupController.getGroupById(groupId: Long)
+
