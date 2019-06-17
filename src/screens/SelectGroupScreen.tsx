@@ -6,6 +6,7 @@ import { Dispatch } from 'redux';
 import fetchGroups from '../actions/FetchGroupsAction';
 import { ThunkDispatch } from 'redux-thunk';
 import { useEffect } from 'react';
+import GroupComponent from '../components/GroupComponent';
 
 interface Props {
 	groups: Group[],
@@ -17,9 +18,7 @@ function SelectGroupScreen(props: Props) {
 	return (
 		<ul>
 			{props.groups.map(group => (
-				<li key={group.id}>
-					<Link to={`/group/${group.id}`}>{group.name}</Link>
-				</li>
+				<GroupComponent key={group.id} {...group} />
 			))}
 		</ul>
 	);
