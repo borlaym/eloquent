@@ -13,6 +13,20 @@ import play.api.libs.json.Json
 @Singleton
 class GroupController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
 
+  def getGroupById(groupId: Long) = Action { implicit request: Request[AnyContent] =>
+    val group = GroupController.groups.get(groupId)
+    group match {
+      case Some(group) => Ok(Json.toJson(group))
+      case _ => NotFound("Group not found")
+    }
+  }
+
+  def getAllGroups() = Action { implicit request: Request[AnyContent] =>
+      Ok(Json.toJson(GroupController.groups.map{ case (_, group) => group }))
+  }
+}
+
+object GroupController {
   val groups: Map[Long, Group] = Map(
     23312.toLong -> Group(23312, "Go", List(
       Game(1, List("Ed", "Viktor"), Some(List(21, 22)), 1),
@@ -25,17 +39,4 @@ class GroupController @Inject()(cc: ControllerComponents) extends AbstractContro
       Game(6, List("Marci", "Viktor"), None, 0)
     ))
   )
-
-
-  def getGroupById(groupId: Long) = Action { implicit request: Request[AnyContent] =>
-    val group = groups.get(groupId)
-    group match {
-      case Some(group) => Ok(Json.toJson(group))
-      case _ => NotFound("Group not found")
-    }
-  }
-
-  def getAllGroups() = Action { implicit request: Request[AnyContent] =>
-      Ok(Json.toJson(groups.map{ case (_, group) => group }))
-  }
 }

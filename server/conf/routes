@@ -7,4 +7,6 @@
 GET     /                           controllers.HomeController.index
 GET     /groups                     controllers.GroupController.getAllGroups
 GET     /groups/:groupId            controllers.GroupController.getGroupById(groupId: Long)
+GET     /games/:gameId              controllers.GameController.getGameById(gameId: Long)
+
 
