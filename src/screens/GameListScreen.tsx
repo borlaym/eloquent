@@ -2,13 +2,17 @@ import * as React from 'react';
 import { Link, match } from 'react-router-dom';
 import { State, Group } from '../types';
 import { connect } from 'react-redux';
+import { ThunkDispatch } from 'redux-thunk';
+import fetchGroup from '../actions/FetchGroupAction';
 
 interface Props {
 	match: match<{ groupId: string }>,
-	group?: Group
+	group?: Group,
+	getGroup: () => void
 };
 
-function GameListScreen({ group }: Props) {
+function GameListScreen({ group, getGroup }: Props) {
+	React.useEffect(() => getGroup(), [])
 	if (!group) {
 		return (<h1>Group not found</h1>);
 	}
@@ -33,9 +37,17 @@ function GameListScreen({ group }: Props) {
 
 function mapStateToProps(state: State, ownProps: Props): Props {
 	return {
+		...ownProps,
 		match: ownProps.match,
 		group: state.groups.find(group => group.id === parseInt(ownProps.match.params.groupId, 10))
 	}
 }
 
-export default connect(mapStateToProps)(GameListScreen);
+function matchDispatchToProps(dispatch: ThunkDispatch<{}, {}, any>, ownProps: Props) {
+	return {
+		...ownProps,
+		getGroup: () => dispatch(fetchGroup(ownProps.match.params.groupId))
+	}
+}
+
+export default connect(mapStateToProps, matchDispatchToProps)(GameListScreen);

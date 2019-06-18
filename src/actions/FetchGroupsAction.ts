@@ -7,7 +7,10 @@ export const GROUPS_URL = '/groups';
 
 export interface FetchGroupsAction {
 	type: typeof FETCH_GROUPS,
-	payload: Group[]
+	payload: {
+		url: string,
+		groups: Group[]
+	}
 }
 
 export default function fetchGroups() {
@@ -18,7 +21,10 @@ export default function fetchGroups() {
 			.then(response => {
 				dispatch({
 					type: 'FETCH_GROUPS',
-					payload: response
+					payload: {
+						url: GROUPS_URL,
+						groups: response
+					}
 				})	
 			})
 	};
