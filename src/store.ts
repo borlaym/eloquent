@@ -2,13 +2,16 @@ import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk';
 import { State } from './types';
 import { SaveGameAction, SAVE_GAME } from './actions/SaveGameAction';
-import { FETCH_GROUPS, FetchGroupsAction } from './actions/FetchGroupsAction';
+import { FETCH_GROUPS, FetchGroupsAction, GROUPS_URL } from './actions/FetchGroupsAction';
+import { FetchStartAction, FETCH_START } from './actions/FetchStartAction';
 
 const dummyData: State = {
-	groups: []
+	groups: [],
+	isLoading: false,
+	loadingResource: null
 }
 
-type ActionTypes = SaveGameAction | FetchGroupsAction;
+type ActionTypes = SaveGameAction | FetchGroupsAction | FetchStartAction;
 	
 
 function reducer(state: State = dummyData, action: ActionTypes): State {
@@ -35,7 +38,15 @@ function reducer(state: State = dummyData, action: ActionTypes): State {
 		case FETCH_GROUPS:
 			return {
 				...state,
-				groups: action.payload
+				groups: action.payload,
+				isLoading: state.loadingResource === GROUPS_URL ? false : state.isLoading,
+				loadingResource: state.loadingResource === GROUPS_URL ? null : state.loadingResource
+			}
+		case FETCH_START:
+			return {
+				...state,
+				isLoading: true,
+				loadingResource: action.payload
 			}
 		default:
 			return state;

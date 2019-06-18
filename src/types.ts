@@ -1,5 +1,7 @@
 export interface State {
-	groups: Group[]
+	groups: Group[],
+	isLoading: boolean,
+	loadingResource: null | string
 };
 
 export interface Group {

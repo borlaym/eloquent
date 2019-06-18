@@ -1,7 +1,9 @@
 import { Dispatch } from "redux";
 import { Group } from "../types";
+import fetchStart from "./FetchStartAction";
 
 export const FETCH_GROUPS = 'FETCH_GROUPS';
+export const GROUPS_URL = '/groups';
 
 export interface FetchGroupsAction {
 	type: typeof FETCH_GROUPS,
@@ -10,11 +12,14 @@ export interface FetchGroupsAction {
 
 export default function fetchGroups() {
 	return (dispatch: Dispatch) => {
-		fetch('/groups')
+		dispatch(fetchStart(GROUPS_URL))
+		fetch(GROUPS_URL)
 			.then(response => response.json())
-			.then(response => dispatch({
-				type: 'FETCH_GROUPS',
-				payload: response
-			}))
+			.then(response => {
+				dispatch({
+					type: 'FETCH_GROUPS',
+					payload: response
+				})	
+			})
 	};
 }
