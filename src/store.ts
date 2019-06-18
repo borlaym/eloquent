@@ -51,7 +51,7 @@ function reducer(state: State = dummyData, action: ActionTypes): State {
 					if (group) {
 						return [
 							...state.groups.slice(0, state.groups.indexOf(group)),
-							group,
+							action.payload.group,
 							...state.groups.slice(state.groups.indexOf(group) + 1)
 						]
 					} else {
