@@ -10,7 +10,5 @@ case class Game (
 								)
 
 object Game {
-	implicit val format = OFormat[Game](
-		Json.reads[Game],
-		Json.writes[Game])
+	implicit val format = Json.format[Game]
 }

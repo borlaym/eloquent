@@ -21,7 +21,10 @@ export default function saveGame(game: NewGame, groupId: number) {
 			body: JSON.stringify({
 				...game,
 				id: 3
-			})
+			}),
+			headers: {
+				'Content-Type': 'application/json'
+			}
 		})
 			.then(response => {
 				console.log('hello')

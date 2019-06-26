@@ -5,7 +5,7 @@ import javax.inject._
 import play.api.mvc._
 import model._
 import controllers._
-import play.api.libs.json.Json
+import play.api.libs.json.{JsError, JsSuccess, Json}
 
 /**
   * This controller creates an `Action` to handle HTTP requests to the
@@ -23,15 +23,24 @@ class GameController @Inject()(cc: ControllerComponents) extends AbstractControl
   }
 
   def addGame(gameId: Long) = Action { implicit request =>
+    println(request.body.asJson)
     request.body.asJson match {
       case Some(json) => {
-        val newGame = json.as[Game]
-        GroupController.groups = GroupController.groups.mapValues {
-          group => if (group.id == gameId) Group(group.id, group.name, newGame :: group.games) else group
-		    }
-        Ok("Ok")
+        Json.fromJson[Game](json) match {
+          case JsSuccess(newGame, _) => {
+            GroupController.groups = GroupController.groups.mapValues {
+              group => if (group.id == gameId) Group(group.id, group.name, newGame :: group.games) else group
+            }
+            Ok("Ok")
+          }
+          case e: JsError => {
+            println("Errors: " + JsError.toJson(e).toString())
+            BadRequest("Malformed data")
+          }
+        }
       }
-      case None => BadRequest("Malformed data")
+      case None => BadRequest("No data")
     }
+
   }
 }
