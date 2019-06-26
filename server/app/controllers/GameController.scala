@@ -21,4 +21,17 @@ class GameController @Inject()(cc: ControllerComponents) extends AbstractControl
       case None => NotFound("Game not found")
     }
   }
+
+  def addGame(gameId: Long) = Action { implicit request =>
+    request.body.asJson match {
+      case Some(json) => {
+        val newGame = json.as[Game]
+        GroupController.groups = GroupController.groups.mapValues {
+          group => if (group.id == gameId) Group(group.id, group.name, newGame :: group.games) else group
+		    }
+        Ok("Ok")
+      }
+      case None => BadRequest("Malformed data")
+    }
+  }
 }

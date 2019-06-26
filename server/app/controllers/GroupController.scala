@@ -27,7 +27,7 @@ class GroupController @Inject()(cc: ControllerComponents) extends AbstractContro
 }
 
 object GroupController {
-  val groups: Map[Long, Group] = Map(
+  var groups: Map[Long, Group] = Map(
     23312.toLong -> Group(23312, "Go", List(
       Game(1, List("Ed", "Viktor"), Some(List(21, 22)), 1),
       Game(2, List("Ed", "Viktor"), Some(List(5, 12)), 1),
