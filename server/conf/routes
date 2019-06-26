@@ -7,6 +7,7 @@
 GET     /                           controllers.HomeController.index
 GET     /groups                     controllers.GroupController.getAllGroups
 GET     /groups/:groupId            controllers.GroupController.getGroupById(groupId: Long)
++ nocsrf
 POST    /groups/:groupId/add        controllers.GameController.addGame(groupId: Long)
 GET     /games/:gameId              controllers.GameController.getGameById(gameId: Long)
 

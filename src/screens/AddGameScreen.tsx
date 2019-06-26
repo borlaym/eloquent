@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { State, Group, NewGame } from '../types';
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
 import saveGame from '../actions/SaveGameAction';
 import { RouteChildrenProps } from 'react-router';
+import { ThunkDispatch } from 'redux-thunk';
 
 interface Props extends RouteChildrenProps<{ groupId: string }> {
 	group?: Group,
-	onSave: (game: NewGame) => void 
+	onSave: (game: NewGame, groupId: number) => void 
 };
 
 function AddGameScreen({ group, onSave, history }: Props) {
@@ -36,7 +36,7 @@ function AddGameScreen({ group, onSave, history }: Props) {
 					players: [player1, player2],
 					winner,
 					score: [score1, score2]
-				})
+				}, group.id)
 				history.push(`/group/${group.id}`);
 			}}>Save</button>
 		</div>
@@ -51,7 +51,7 @@ function mapStateToProps(state: State, ownProps: Props): Props {
 	}
 }
 
-function matchDispatchToProps(dispatch: Dispatch, ownProps: Props) {
+function matchDispatchToProps(dispatch: ThunkDispatch<{}, {}, any>, ownProps: Props) {
 	return {
 		onSave: (game: NewGame) => dispatch(saveGame(game, ownProps.match && parseInt(ownProps.match.params.groupId) || 0))
 	}
