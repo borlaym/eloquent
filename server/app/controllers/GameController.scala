@@ -26,10 +26,15 @@ class GameController @Inject()(cc: ControllerComponents) extends AbstractControl
     println(request.body.asJson)
     request.body.asJson match {
       case Some(json) => {
-        Json.fromJson[Game](json) match {
+        Json.fromJson[NewGame](json) match {
           case JsSuccess(newGame, _) => {
             GroupController.groups = GroupController.groups.mapValues {
-              group => if (group.id == gameId) Group(group.id, group.name, newGame :: group.games) else group
+              group => if (group.id == gameId) Group(
+                group.id,
+                group.name,
+                Game(System.currentTimeMillis(), newGame.players, newGame.score, newGame.winner) :: group.games
+              )
+              else group
             }
             Ok("Ok")
           }
