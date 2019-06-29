@@ -1,3 +1,4 @@
 export default {
-	orange: '#fa7722'
+	blue: '#104E6D',
+	green: '#216231'
 }
