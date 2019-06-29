@@ -28,15 +28,7 @@ class GroupController @Inject()(cc: ControllerComponents) extends AbstractContro
 
 object GroupController {
   var groups: Map[Long, Group] = Map(
-    23312.toLong -> Group(23312, "Go", List(
-      Game(1, List("Ed", "Viktor"), Some(List(21, 22)), 1),
-      Game(2, List("Ed", "Viktor"), Some(List(5, 12)), 1),
-      Game(3, List("Ed", "Viktor"), Some(List(25, 1)), 0)
-    )),
-    21311.toLong -> Group(21311, "Chess", List(
-      Game(4, List("Marci", "Viktor"), None, 0),
-      Game(5, List("Marci", "Viktor"), None, 1),
-      Game(6, List("Marci", "Viktor"), None, 0)
-    ))
+    23312.toLong -> Group(23312, "Go", List()),
+    21311.toLong -> Group(21311, "Chess", List())
   )
 }

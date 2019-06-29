@@ -22,20 +22,20 @@ class GameController @Inject()(cc: ControllerComponents) extends AbstractControl
     }
   }
 
-  def addGame(gameId: Long) = Action { implicit request =>
-    println(request.body.asJson)
+  def addGame(groupId: Long) = Action { implicit request =>
     request.body.asJson match {
       case Some(json) => {
         Json.fromJson[NewGame](json) match {
           case JsSuccess(newGame, _) => {
-            GroupController.groups = GroupController.groups.mapValues {
-              group => if (group.id == gameId) Group(
-                group.id,
-                group.name,
-                Game(System.currentTimeMillis(), newGame.players, newGame.score, newGame.winner) :: group.games
-              )
-              else group
-            }
+            GroupController.groups = GroupController.groups.map { case (id, group) => {
+				if (group.id == groupId) (id, Group(
+					group.id,
+					group.name,
+					Game(System.currentTimeMillis(), newGame.players, newGame.score, newGame.winner) :: group.games
+				))
+				else (id, group)
+			  }
+			}
             Ok("Ok")
           }
           case e: JsError => {
