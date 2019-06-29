@@ -7,7 +7,7 @@ import { ThunkDispatch } from 'redux-thunk';
 
 interface Props extends RouteChildrenProps<{ groupId: string }> {
 	group?: Group,
-	onSave: (game: NewGame, groupId: number) => void 
+	onSave: (game: NewGame) => void 
 };
 
 function AddGameScreen({ group, onSave, history }: Props) {
@@ -36,8 +36,7 @@ function AddGameScreen({ group, onSave, history }: Props) {
 					players: [player1, player2],
 					winner,
 					score: [score1, score2]
-				}, group.id)
-				history.push(`/group/${group.id}`);
+				})
 			}}>Save</button>
 		</div>
 	);
@@ -53,7 +52,9 @@ function mapStateToProps(state: State, ownProps: Props): Props {
 
 function matchDispatchToProps(dispatch: ThunkDispatch<{}, {}, any>, ownProps: Props) {
 	return {
-		onSave: (game: NewGame) => dispatch(saveGame(game, ownProps.match && parseInt(ownProps.match.params.groupId) || 0))
+		onSave: (game: NewGame) => dispatch(
+			saveGame(game, ownProps.match && parseInt(ownProps.match.params.groupId) || 0, ownProps.history)
+		)
 	}
 }
 

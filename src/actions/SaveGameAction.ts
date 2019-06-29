@@ -2,6 +2,7 @@ import { NewGame } from "../types";
 import fetchStart from "./FetchStartAction";
 import { Dispatch } from "redux";
 import getUrl from "../getUrl";
+import { History } from "history";
 
 export const SAVE_GAME = 'SAVE_GAME';
 
@@ -13,7 +14,7 @@ export interface SaveGameAction {
 	}
 }
 
-export default function saveGame(game: NewGame, groupId: number) {
+export default function saveGame(game: NewGame, groupId: number, history: History) {
 	const url = getUrl(`/groups/${groupId}/add`);
 	return (dispatch: Dispatch) => {
 		dispatch(fetchStart(url))
@@ -27,8 +28,8 @@ export default function saveGame(game: NewGame, groupId: number) {
 				'Content-Type': 'application/json'
 			}
 		})
-			.then(response => {
-				console.log('hello')
+			.then(() => {
+				history.push(`/group/${groupId}`);
 			})
 			.catch(message => alert(message))
 	};
