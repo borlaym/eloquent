@@ -1,10 +1,11 @@
 import { Dispatch } from "redux";
 import { Group } from "../types";
 import fetchStart from "./FetchStartAction";
+import getUrl from "../getUrl";
 
 export const FETCH_GROUPS = 'FETCH_GROUPS';
-export const GROUPS_URL = '/groups';
-
+export const GROUPS_URL = getUrl('/groups');
+console.log(GROUPS_URL)
 export interface FetchGroupsAction {
 	type: typeof FETCH_GROUPS,
 	payload: {

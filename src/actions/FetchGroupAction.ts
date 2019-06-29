@@ -1,6 +1,7 @@
 import { Dispatch } from "redux";
 import { Group } from "../types";
 import fetchStart from "./FetchStartAction";
+import getUrl from "../getUrl";
 
 export const FETCH_GROUP = 'FETCH_GROUP';
 
@@ -15,7 +16,7 @@ export interface FetchGroupAction {
 export default function fetchGroup(id: string) {
 	const url = `/groups/${id}`
 	return (dispatch: Dispatch) => {
-		dispatch(fetchStart(url))
+		dispatch(fetchStart(getUrl(url)))
 		fetch(url)
 			.then(response => response.json())
 			.then(response => {
