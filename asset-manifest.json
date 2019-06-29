@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.js": "/eloquent/static/js/main.a1ff7397.chunk.js",
-    "main.js.map": "/eloquent/static/js/main.a1ff7397.chunk.js.map",
+    "main.js": "/eloquent/static/js/main.a18ac464.chunk.js",
+    "main.js.map": "/eloquent/static/js/main.a18ac464.chunk.js.map",
     "runtime~main.js": "/eloquent/static/js/runtime~main.3234dcbc.js",
     "runtime~main.js.map": "/eloquent/static/js/runtime~main.3234dcbc.js.map",
-    "static/js/2.d570f459.chunk.js": "/eloquent/static/js/2.d570f459.chunk.js",
-    "static/js/2.d570f459.chunk.js.map": "/eloquent/static/js/2.d570f459.chunk.js.map",
+    "static/js/2.f88e2528.chunk.js": "/eloquent/static/js/2.f88e2528.chunk.js",
+    "static/js/2.f88e2528.chunk.js.map": "/eloquent/static/js/2.f88e2528.chunk.js.map",
     "index.html": "/eloquent/index.html",
-    "precache-manifest.54f6455af113bdb94f01c7eb7c145d3b.js": "/eloquent/precache-manifest.54f6455af113bdb94f01c7eb7c145d3b.js",
+    "precache-manifest.b84e0e39d98b0e21249d1de047f625c4.js": "/eloquent/precache-manifest.b84e0e39d98b0e21249d1de047f625c4.js",
     "service-worker.js": "/eloquent/service-worker.js"
   }
 }
