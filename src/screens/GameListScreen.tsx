@@ -4,6 +4,8 @@ import { State, Group } from '../types';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import fetchGroup from '../actions/FetchGroupAction';
+import HeaderComponent from '../components/HeaderComponent';
+import { ContentContainer } from '../components/LayoutComponents';
 
 interface Props {
 	match: match<{ groupId: string }>,
@@ -18,19 +20,21 @@ function GameListScreen({ group, getGroup }: Props) {
 	}
 	return (
 		<div>
-			<h1>{group.name}</h1>
-			<ul>
-				{group.games.map(game => (
-					<li key={game.id}>
-						{game.players[0]}{game.winner === 0 && '(w)'} {game.score && game.score[0]} -
-						{game.score && game.score[1]} {game.players[1]}{game.winner === 1 && '(w)'} 
-						<Link to={`/group/${group.id}/games/${game.id}`}>Details</Link>
-					</li>
-				))}
-			</ul>
+			<HeaderComponent backButtonUrl='/' screenTitle={`ELOQUENT | ${group.name}`} />
+			<ContentContainer>
+				<ul>
+					{group.games.map(game => (
+						<li key={game.id}>
+							{game.players[0]}{game.winner === 0 && '(w)'} {game.score && game.score[0]} -
+							{game.score && game.score[1]} {game.players[1]}{game.winner === 1 && '(w)'}
+							<Link to={`/group/${group.id}/games/${game.id}`}>Details</Link>
+						</li>
+					))}
+				</ul>
 
-			<Link to={`/group/${group.id}/add`}>Add new game</Link>
+				<Link to={`/group/${group.id}/add`}>Add new game</Link>
 
+			</ContentContainer>
 		</div>
 	);
 }

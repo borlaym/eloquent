@@ -9,7 +9,7 @@ const GroupName = styled.div`
 	background: linear-gradient(45deg, ${variables.green} 0%, ${variables.blue} 100%);
 	border-radius: 5px;
 	display: flex;
-	margin: 1em;
+	margin: 1em 0;
 	font-weight: bold;
 	text-align: center;
 

@@ -8,28 +8,8 @@ import { ThunkDispatch } from 'redux-thunk';
 import { useEffect } from 'react';
 import styled from 'styled-components';
 import GroupComponent from '../components/GroupComponent';
-
-const ContentContainer = styled.div`
-	margin: 0 auto;
-	max-width: 800px;
-`
-
-const Header = styled.div`
-	background: #000;
-	display: flex;
-`
-
-const Logo = styled.a`
-	color: #fff;
-	font-weight: bold;
-	padding: 1em;
-
-	::hover,
-	::active,
-	::focus {
-		color: #fff;
-	}
-`
+import HeaderComponent from '../components/HeaderComponent';
+import { ContentContainer } from '../components/LayoutComponents';
 
 interface Props {
 	groups: Group[],
@@ -40,9 +20,7 @@ function SelectGroupScreen(props: Props) {
 	useEffect(() => props.getGroups(), [])
 	return (
 		<div>
-			<Header>
-				<Logo>ELOQUENT</Logo>
-			</Header>
+			<HeaderComponent screenTitle='ELOQUENT'/>
 			<ContentContainer>
 				{props.groups.map(group => (
 					<GroupComponent key={group.id} {...group} />
