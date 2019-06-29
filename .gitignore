@@ -34,3 +34,4 @@ target
 .metals
 .bloop
 gradle
+project/boot

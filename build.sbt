@@ -1,4 +1,4 @@
-name := """server"""
+name := """eloquent"""
 organization := "com.mborlay"
 
 version := "1.0-SNAPSHOT"
