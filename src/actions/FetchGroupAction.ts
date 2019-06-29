@@ -14,9 +14,9 @@ export interface FetchGroupAction {
 }
 
 export default function fetchGroup(id: string) {
-	const url = `/groups/${id}`
+	const url = getUrl(`/groups/${id}`)
 	return (dispatch: Dispatch) => {
-		dispatch(fetchStart(getUrl(url)))
+		dispatch(fetchStart(url))
 		fetch(url)
 			.then(response => response.json())
 			.then(response => {
