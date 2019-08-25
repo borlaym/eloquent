@@ -1,16 +1,13 @@
 package model
 
-import play.api.libs.json.{JsPath, Json, OFormat, Writes}
+import play.api.libs.json.{Format, Json}
 
-case class Group (
+final case class Group (
 	id: Long,
-	name: String,
-	games: List[Game]
+	name: String
 )
 
 object Group {
-	implicit val format = OFormat[Group](
-		Json.reads[Group],
-		Json.writes[Group])
+	implicit val format: Format[Group] = Json.format[Group]
 }
 
