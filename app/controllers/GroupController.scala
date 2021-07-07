@@ -1,34 +1,49 @@
 package controllers
 
-import javax.inject._
+import data.{GameRepository, GroupRepository}
+import model.GroupWithGames
 
-import play.api.mvc._
-import model._
+import javax.inject._
 import play.api.libs.json.Json
+import play.api.mvc._
+import scala.concurrent.ExecutionContext
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
  * application's home page.
  */
 @Singleton
-class GroupController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
+class GroupController @Inject()(
+  cc: ControllerComponents,
+  groupRepository: GroupRepository,
+  gameRepository: GameRepository
+)(implicit ec: ExecutionContext) extends AbstractController(cc) {
 
-  def getGroupById(groupId: Long) = Action { implicit request: Request[AnyContent] =>
-    val group = GroupController.groups.get(groupId)
-    group match {
-      case Some(group) => Ok(Json.toJson(group))
-      case _ => NotFound("Group not found")
-    }
+  def getGroupById(groupId: Long): Action[Unit] = Action.async(parse.empty) { implicit request =>
+    for {
+      groupOpt <- groupRepository.byId(groupId)
+      games <- gameRepository.byGroupId(groupId)
+
+      result = groupOpt match {
+        case Some(group) =>
+          val groupWithGames = GroupWithGames(group, games.toList)
+          Ok(Json.toJson(groupWithGames))
+        case None =>
+          NotFound("Group not found")
+      }
+    } yield result
   }
 
-  def getAllGroups() = Action { implicit request: Request[AnyContent] =>
-      Ok(Json.toJson(GroupController.groups.map{ case (_, group) => group }))
+  def getAllGroups(): Action[Unit] = Action.async(parse.empty) { implicit request =>
+    for {
+      groups <- groupRepository.all
+      games <- gameRepository.all
+
+      gameLookup = games.groupBy(_.groupId)
+      groupsWithGames = groups.map { group =>
+        GroupWithGames(group, gameLookup.getOrElse(group.id, Seq.empty).toList)
+      }
+    } yield Ok(Json.toJson(groupsWithGames))
   }
 }
 
-object GroupController {
-  var groups: Map[Long, Group] = Map(
-    23312.toLong -> Group(23312, "Go", List()),
-    21311.toLong -> Group(21311, "Chess", List())
-  )
-}

@@ -1,14 +1,17 @@
 package model
 
-import play.api.libs.json.{Json, OFormat}
+import play.api.libs.json.{Json, Writes}
 
-case class Game (
-	id: Long,
-	players: List[String],
-	score: Option[List[Int]],
-	winner: Int
-								)
+final case class Game(
+  id: Long,
+  groupId: Long,
+  player1: String,
+  player2: String,
+  score1: Option[Int],
+  score2: Option[Int],
+  winner: Int
+)
 
 object Game {
-	implicit val format = Json.format[Game]
+  implicit val writes: Writes[Game] = Json.writes[Game]
 }

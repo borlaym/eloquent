@@ -1,51 +1,37 @@
 package controllers
 
-import javax.inject._
+import data.GameRepository
+import model.NewGame
 
+import javax.inject._
+import play.api.libs.json.Json
 import play.api.mvc._
-import model._
-import controllers._
-import play.api.libs.json.{JsError, JsSuccess, Json}
+import scala.concurrent.ExecutionContext
 
 /**
   * This controller creates an `Action` to handle HTTP requests to the
   * application's home page.
   */
 @Singleton
-class GameController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
+class GameController @Inject()(
+  cc: ControllerComponents,
+  gameRepository: GameRepository
+)(implicit ec: ExecutionContext) extends AbstractController(cc) {
 
-  def getGameById(gameId: Long) = Action { implicit request: Request[AnyContent] =>
-    val games = GroupController.groups.map{ case (_, group) => group.games }.flatten
-    games.find(game => game.id == gameId) match {
-      case Some(game) => Ok(Json.toJson((game)))
-      case None => NotFound("Game not found")
-    }
+  def getGameById(gameId: Long): Action[Unit] = Action.async(parse.empty) { implicit request =>
+    for {
+      gameOpt <- gameRepository.byId(gameId)
+
+      result = gameOpt match {
+        case Some(game) => Ok(Json.toJson(game))
+        case None => NotFound("Game not found")
+      }
+    } yield result
   }
 
-  def addGame(groupId: Long) = Action { implicit request =>
-    request.body.asJson match {
-      case Some(json) => {
-        Json.fromJson[NewGame](json) match {
-          case JsSuccess(newGame, _) => {
-            GroupController.groups = GroupController.groups.map { case (id, group) => {
-				if (group.id == groupId) (id, Group(
-					group.id,
-					group.name,
-					Game(System.currentTimeMillis(), newGame.players, newGame.score, newGame.winner) :: group.games
-				))
-				else (id, group)
-			  }
-			}
-            Ok("Ok")
-          }
-          case e: JsError => {
-            println("Errors: " + JsError.toJson(e).toString())
-            BadRequest("Malformed data")
-          }
-        }
-      }
-      case None => BadRequest("No data")
-    }
-
+  def addGame(): Action[NewGame] = Action.async(parse.json[NewGame]) { implicit request =>
+    for {
+      game <- gameRepository.insert(request.body)
+    } yield Created(Json.toJson(game))
   }
 }
